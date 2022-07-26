@@ -40,3 +40,6 @@ val SecondaryColorNavy = Color(0xFF0595CF)
  * From xml theme color: tertiary_color_navy
  */
 val TertiaryColorNavy = Color(0xFF10CF18)
+
+val darkBackground = Color(red = 27, green = 31, blue = 29)
+val lightBackground = Color(red = 251, green = 255, blue = 253)

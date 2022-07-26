@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Halongpay</string>
+    <string name="common_error_message">Some Error Occurs</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login_continue">Login</string>
+    <string name="please_go_online">Please provide internet connection to proceed</string>
+    <string name="no_internet">You are offline</string>
+    <string name="sign_up_hint">Don\'t have an account?</string>
+    <string name="sign_up_instruction">Provide your basic information to join us</string>
+    <string name="NEXT">NEXT</string>
+    <string name="regis_fullname">Fullname</string>
+    <string name="error_required">Required</string>
+    <string name="regis_mobile">Mobile Number</string>
+    <string name="regis_term_auto_agree"><![CDATA[By creating an account, you already agreed with our Term & Conditions and Privacy Policy]]></string>
 </resources>

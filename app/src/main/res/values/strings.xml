@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">Halongpay</string>
+    <string name="common_error_message">Some Error Occurs</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login_continue">Login</string>
+    <string name="please_go_online">Please provide internet connection to proceed</string>
+    <string name="no_internet">You are offline</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_transform">Transform</string>
+    <string name="menu_reflow">Reflow</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="lorem_ipsum_title">Lorem Ipsum"</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
+        typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
+        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+        type specimen book"
+    </string>
+    <string name="fab_content_description">Represents a view to invoke an action</string>
+    <string name="image_view_item_transform_content_description">Represents an image view in the
+        item
+    </string>
+    <string name="sign_up_hint">Don\'t have an account?</string>
+    <string name="sign_up_instruction">Provide your basic information to join us</string>
+    <string name="NEXT">NEXT</string>
+    <string name="regis_fullname">Fullname</string>
+    <string name="error_required">Required</string>
+    <string name="regis_mobile">Mobile Number</string>
+    <string name="regis_term_auto_agree"><![CDATA[By creating an account, you already agreed with our Term & Conditions and Privacy Policy]]></string>
 </resources>
