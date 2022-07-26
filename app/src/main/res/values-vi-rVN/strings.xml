@@ -17,4 +17,8 @@
     <string name="error_required">Required</string>
     <string name="regis_mobile">Mobile Number</string>
     <string name="regis_term_auto_agree"><![CDATA[By creating an account, you already agreed with our Term & Conditions and Privacy Policy]]></string>
+    <string name="regis_email">Email</string>
+    <string name="regis_confirm_pass">Confirm Password</string>
+    <string name="regis_password">Password</string>
+    <string name="error_pass_not_match">Password not matching</string>
 </resources>

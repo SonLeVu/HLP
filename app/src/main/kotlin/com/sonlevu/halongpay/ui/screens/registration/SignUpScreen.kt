@@ -1,5 +1,6 @@
 package com.sonlevu.halongpay.ui.screens.registration
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,30 +13,25 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sonlevu.halongpay.R
 import com.sonlevu.halongpay.ui.theme.PrimaryColorYellow
-import com.sonlevu.halongpay.ui.theme.SecondaryColorNavy
 import com.sonlevu.halongpay.ui.utils.HyperlinkText
 
 @Composable
 fun RegistrationScreen(viewModel: SignUpViewModel) {
-    val context = LocalContext.current
-
     val scrollState = rememberScrollState()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,138 +42,91 @@ fun RegistrationScreen(viewModel: SignUpViewModel) {
         Spacer(Modifier.size(10.dp))
         Text(text = stringResource(R.string.sign_up_instruction))
         Spacer(Modifier.size(40.dp))
-        OutlinedTextField(
-            value = viewModel.name.value,
-            onValueChange = {
+
+        RegistrationField(
+            isError = viewModel.nameErrorState.value,
+            errorMess = stringResource(id = R.string.error_required),
+            onValueChanged = {
                 if (viewModel.nameErrorState.value) {
                     viewModel.nameErrorState.value = false
                 }
                 viewModel.name.value = it
             },
-
-            modifier = Modifier.fillMaxWidth(),
-            isError = viewModel.nameErrorState.value,
-            label = {
-                Text(
-                    text = stringResource(id = R.string.regis_fullname),
-                    fontStyle = FontStyle.Italic
-                )
-            },
+            stringRes = R.string.regis_fullname,
+            textFieldValue = viewModel.name.value
         )
-        if (viewModel.nameErrorState.value) {
-            Text(text = stringResource(id = R.string.error_required), color = Color.Red)
-        }
-        Spacer(Modifier.size(16.dp))
-
-        OutlinedTextField(
-            value = viewModel.email.value,
-            onValueChange = {
+        RegistrationField(
+            isError = viewModel.emailErrorState.value,
+            errorMess = stringResource(id = R.string.error_required),
+            onValueChanged = {
                 if (viewModel.emailErrorState.value) {
                     viewModel.emailErrorState.value = false
                 }
                 viewModel.email.value = it
             },
-
-            modifier = Modifier.fillMaxWidth(),
-            isError = viewModel.emailErrorState.value,
-            label = {
-                Text(text = "Email", fontStyle = FontStyle.Italic)
-            },
+            stringRes = R.string.regis_email,
+            textFieldValue = viewModel.email.value
         )
-        if (viewModel.emailErrorState.value) {
-            Text(text = stringResource(id = R.string.error_required), color = Color.Red)
-        }
-        Spacer(modifier = Modifier.size(16.dp))
-
-        OutlinedTextField(
-            value = viewModel.mobileNo.value,
-            onValueChange = {
+        RegistrationField(
+            isError = false,
+            errorMess = stringResource(id = R.string.error_required),
+            onValueChanged = {
                 viewModel.mobileNo.value = it
             },
+            stringRes = R.string.regis_mobile,
+            textFieldValue = viewModel.email.value,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Phone,
                 autoCorrect = false
-            ),
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(
-                    text = stringResource(id = R.string.regis_mobile),
-                    fontStyle = FontStyle.Italic
-                )
-            },
+            )
         )
 
-        Spacer(Modifier.size(16.dp))
         val passwordVisibility = remember { mutableStateOf(true) }
-        OutlinedTextField(
-            value = viewModel.password.value,
-            onValueChange = {
+        val cPasswordVisibility = remember { mutableStateOf(true) }
+
+        RegistrationField(
+            isError = viewModel.passwordErrorState.value,
+            errorMess = stringResource(id = R.string.error_required),
+            onValueChanged = {
                 if (viewModel.passwordErrorState.value) {
                     viewModel.passwordErrorState.value = false
                 }
                 viewModel.password.value = it
             },
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(text = "Password", fontStyle = FontStyle.Italic)
-            },
-            isError = viewModel.passwordErrorState.value,
-            trailingIcon = {
-                IconButton(onClick = {
-                    passwordVisibility.value = !passwordVisibility.value
-                }) {
-                    Icon(
-                        imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                        contentDescription = "visibility",
-                        tint = SecondaryColorNavy
-                    )
-                }
-            },
-            visualTransformation = if (passwordVisibility.value) PasswordVisualTransformation() else VisualTransformation.None
+            stringRes = R.string.regis_password,
+            textFieldValue = viewModel.password.value,
+            isEnableTrailingIcon = true,
+            isHidingPassword = passwordVisibility.value,
+            onTrailingIconClicked = {
+                passwordVisibility.value = !passwordVisibility.value
+            }
         )
-        if (viewModel.passwordErrorState.value) {
-            Text(text = stringResource(id = R.string.error_required), color = Color.Red)
-        }
 
-        Spacer(Modifier.size(16.dp))
-        val cPasswordVisibility = remember { mutableStateOf(true) }
-        OutlinedTextField(
-            value = viewModel.confirmPassword.value,
-            onValueChange = {
+        RegistrationField(
+            isError = viewModel.confirmPasswordErrorState.value,
+            errorMess = if (viewModel.confirmPassword.value.text.isEmpty()) {
+                stringResource(id = R.string.error_required)
+            } else if (viewModel.confirmPassword.value.text != viewModel.password.value.text) {
+                stringResource(id = R.string.error_pass_not_match)
+            } else {
+                ""
+            },
+            onValueChanged = {
                 if (viewModel.confirmPasswordErrorState.value) {
                     viewModel.confirmPasswordErrorState.value = false
                 }
                 viewModel.confirmPassword.value = it
             },
-            modifier = Modifier.fillMaxWidth(),
-            isError = viewModel.confirmPasswordErrorState.value,
-            label = {
-                Text(text = "Confirm Password", fontStyle = FontStyle.Italic)
-            },
-            trailingIcon = {
-                IconButton(onClick = {
-                    cPasswordVisibility.value = !cPasswordVisibility.value
-                }) {
-                    Icon(
-                        imageVector = if (cPasswordVisibility.value) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                        contentDescription = "visibility",
-                        tint = SecondaryColorNavy
-                    )
-                }
-            },
-            visualTransformation = if (cPasswordVisibility.value) PasswordVisualTransformation() else VisualTransformation.None
-        )
-        if (viewModel.confirmPasswordErrorState.value) {
-            val msg = if (viewModel.confirmPassword.value.text.isEmpty()) {
-                stringResource(id = R.string.error_required)
-            } else if (viewModel.confirmPassword.value.text != viewModel.password.value.text) {
-                "Password not matching"
-            } else {
-                ""
+            stringRes = R.string.regis_confirm_pass,
+            textFieldValue = viewModel.confirmPassword.value,
+            isEnableTrailingIcon = true,
+            isHidingPassword = cPasswordVisibility.value,
+            onTrailingIconClicked = {
+                cPasswordVisibility.value = !cPasswordVisibility.value
             }
-            Text(text = msg, color = Color.Red)
-        }
-        Spacer(Modifier.size(190.dp))
+        )
+
+        Spacer(Modifier.size(174.dp))
         HyperlinkText(
             fullText = stringResource(id = R.string.regis_term_auto_agree),
             hyperlinks = listOf("https://halongpay.com", "https://halongpay.com"),
@@ -206,4 +155,59 @@ fun RegistrationScreen(viewModel: SignUpViewModel) {
         )
         Spacer(Modifier.size(16.dp))
     }
+}
+
+@Composable
+fun RegistrationField(
+    isError: Boolean,
+    errorMess: String,
+    @StringRes stringRes: Int,
+    textFieldValue: TextFieldValue,
+    onValueChanged: (TextFieldValue) -> Unit,
+    onTrailingIconClicked: (() -> Unit)? = null,
+    isEnableTrailingIcon: Boolean = false,
+    isHidingPassword: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
+    OutlinedTextField(
+        value = textFieldValue,
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            backgroundColor = Color.LightGray.copy(alpha = 0.25F),
+            unfocusedBorderColor = Color.LightGray.copy(alpha = 0.25F),
+            unfocusedLabelColor = Color.DarkGray.copy(alpha = 0.6F),
+            focusedLabelColor = PrimaryColorYellow,
+            focusedBorderColor = PrimaryColorYellow),
+        onValueChange = {
+            onValueChanged(it)
+        },
+        keyboardOptions = keyboardOptions,
+        modifier = Modifier.fillMaxWidth(),
+        isError = isError,
+        label = {
+            Text(
+                text = stringResource(id = stringRes),
+                fontStyle = FontStyle.Italic
+            )
+        },
+        trailingIcon = {
+            if (isEnableTrailingIcon) {
+                IconButton(onClick = {
+                    if (onTrailingIconClicked != null) {
+                        onTrailingIconClicked()
+                    }
+                }) {
+                    Icon(
+                        imageVector = if (isHidingPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = "visibility",
+                        tint = PrimaryColorYellow
+                    )
+                }
+            }
+        },
+        visualTransformation = if (isHidingPassword && isEnableTrailingIcon) PasswordVisualTransformation() else VisualTransformation.None
+    )
+    if (isError) {
+        Text(text = errorMess, color = Color.Red)
+    }
+    Spacer(modifier = Modifier.size(16.dp))
 }
