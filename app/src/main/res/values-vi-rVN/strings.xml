@@ -21,4 +21,5 @@
     <string name="regis_confirm_pass">Confirm Password</string>
     <string name="regis_password">Password</string>
     <string name="error_pass_not_match">Password not matching</string>
+    <string name="regis_title">CREATE HALONGPAY ACCOUNT</string>
 </resources>

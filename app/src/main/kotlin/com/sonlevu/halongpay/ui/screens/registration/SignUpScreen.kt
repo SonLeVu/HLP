@@ -31,17 +31,16 @@ import com.sonlevu.halongpay.ui.utils.HyperlinkText
 
 @Composable
 fun RegistrationScreen(viewModel: SignUpViewModel) {
-    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(scrollState),
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
     ) {
-        Spacer(Modifier.size(10.dp))
+        Spacer(Modifier.size(2.dp))
         Text(text = stringResource(R.string.sign_up_instruction))
-        Spacer(Modifier.size(40.dp))
+        Spacer(Modifier.size(34.dp))
 
         RegistrationField(
             isError = viewModel.nameErrorState.value,
@@ -126,7 +125,7 @@ fun RegistrationScreen(viewModel: SignUpViewModel) {
             }
         )
 
-        Spacer(Modifier.size(174.dp))
+        Spacer(Modifier.size(154.dp))
         HyperlinkText(
             fullText = stringResource(id = R.string.regis_term_auto_agree),
             hyperlinks = listOf("https://halongpay.com", "https://halongpay.com"),
@@ -153,7 +152,7 @@ fun RegistrationScreen(viewModel: SignUpViewModel) {
             shape = RoundedCornerShape(20.dp),
             contentPadding = PaddingValues(horizontal = 40.dp)
         )
-        Spacer(Modifier.size(16.dp))
+        Spacer(Modifier.size(60.dp))
     }
 }
 
@@ -176,7 +175,8 @@ fun RegistrationField(
             unfocusedBorderColor = Color.LightGray.copy(alpha = 0.25F),
             unfocusedLabelColor = Color.DarkGray.copy(alpha = 0.6F),
             focusedLabelColor = PrimaryColorYellow,
-            focusedBorderColor = PrimaryColorYellow),
+            focusedBorderColor = PrimaryColorYellow
+        ),
         onValueChange = {
             onValueChanged(it)
         },
